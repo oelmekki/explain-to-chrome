@@ -3,21 +3,37 @@
   "version": "1.0",
   "manifest_version": 2,
   "description": "Use ExplainToMe to sum up hovered link",
+
   "background": {
     "persistent": false,
     "scripts": [
-      "background.js"
+      "background/background.js"
     ]
   },
+
+  "browser_action": {
+    "default_icon": { "38": "icon.png" },
+    "default_popup": "browser_action/main.html"
+  },
+
   "content_scripts": [
     {
       "matches": [ "https://*/*", "http://*/*" ],
-      "js": [ "explainer.js", "popup.js", "positioner.js", "intent_loader.js", "utils.js", "main.js" ],
+      "js": [
+        "content_script/explainer.js",
+        "content_script/popup.js",
+        "content_script/positioner.js",
+        "content_script/intent_loader.js",
+        "content_script/utils.js",
+        "content_script/main.js"
+      ],
       "run_at": "document_end"
     }
   ],
 
   "permissions": [ 
-    "https://*/*", "http://*/*", "activeTab"
+    "https://*/*", "http://*/*",
+    "activeTab",
+    "storage"
   ]
 }

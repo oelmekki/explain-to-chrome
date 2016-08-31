@@ -4,10 +4,14 @@ class Main {
   }
 
   detect( event ){
-    let link = findLink( event.target );
-    if (  link && linkishUrl( link ).match( /^(https?:\/\/|\/)/ ) ){
-      this.explain( link );
-    }
+    useOnThisDomain().then( function( letsGo ){
+      if ( letsGo ){
+        let link = findLink( event.target );
+        if (  link && linkishUrl( link ).match( /^(https?:\/\/|\/)/ ) ){
+          this.explain( link );
+        }
+      }
+    }.bind( this ));
   }
 
   explain( link ){
