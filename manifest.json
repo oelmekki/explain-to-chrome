@@ -1,0 +1,23 @@
+{
+  "name": "Explain to chrome",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Use ExplainToMe to sum up hovered link",
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [ "https://*/*", "http://*/*" ],
+      "js": [ "explainer.js", "popup.js", "positioner.js", "intent_loader.js", "utils.js", "main.js" ],
+      "run_at": "document_end"
+    }
+  ],
+
+  "permissions": [ 
+    "https://*/*", "http://*/*", "activeTab"
+  ]
+}
