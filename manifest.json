@@ -1,8 +1,8 @@
 {
-  "name": "Explain to chrome",
+  "name": "Explain to Chrome",
   "version": "1.0",
   "manifest_version": 2,
-  "description": "Use ExplainToMe to sum up hovered link",
+  "description": "Article shortener using ExplainToMe",
 
   "background": {
     "persistent": false,
@@ -12,7 +12,7 @@
   },
 
   "browser_action": {
-    "default_icon": { "38": "icon.png" },
+    "default_icon": { "38": "logo.png" },
     "default_popup": "browser_action/main.html"
   },
 
@@ -36,5 +36,11 @@
     "activeTab",
     "storage",
     "contextMenus"
-  ]
+  ],
+
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  }
 }
