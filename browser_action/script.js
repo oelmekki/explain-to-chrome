@@ -2,11 +2,20 @@ class Main {
   constructor(){
     this.useOnDomain = false;
     this.domain = '';
-    document.querySelector( 'button' ).addEventListener( 'click', this.toggle.bind( this ) );
-    this.check();
+    this.setActivation();
+    this.checkDomain();
+    this.bindEvents();
   }
 
-  check(){
+  setActivation(){
+    chrome.runtime.getBackgroundPage( ( background ) => {
+      background.retrieveActivation().then( ( activation ) => {
+        document.querySelector( `[name="activation"][value="${activation}"]` ).checked = "checked";
+      });
+    });
+  }
+
+  checkDomain(){
     chrome.runtime.getBackgroundPage( ( background ) => {
       background.retrieveDomain().then( ( domain ) => {
         document.querySelector( "#domain" ).innerText = domain;
@@ -22,9 +31,24 @@ class Main {
     });
   }
 
+  bindEvents(){
+    document.querySelector( 'button' ).addEventListener( 'click', this.toggle.bind( this ) );
+    [].forEach.call( document.querySelectorAll( '[type="radio"]' ), radio => {
+      radio.addEventListener( 'change', this.changeActivation.bind( this ) );
+    });
+  }
+
   toggle(){
     chrome.runtime.getBackgroundPage( ( background ) => {
       background.toggleUse( this.domain, ! this.useOnDomain ).then( this.check.bind( this ) );
+    });
+  }
+
+  changeActivation(){
+    [].forEach.call( document.querySelectorAll( '[type="radio"]' ), radio => {
+      if ( radio.checked ){
+        chrome.runtime.getBackgroundPage( ( background ) => background.setActivation( radio.value ) );
+      }
     });
   }
 }

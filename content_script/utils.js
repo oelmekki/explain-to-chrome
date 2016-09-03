@@ -24,6 +24,10 @@ function useOnThisDomain(){
   });
 }
 
+function initContextMenu(){
+  let domain = window.location.href.replace( /https?:\/\/(.*?)\/.*/, '$1' );
+  chrome.runtime.sendMessage({ action: "initContextMenu", domain: domain });
+}
 
 function setStyles( element, styles ){
   Object.keys( styles ).forEach( function( style ){
@@ -34,7 +38,7 @@ function setStyles( element, styles ){
 chrome.runtime.onMessage.addListener( function( request ){
   if ( request.action == "useOnThisDomain" ){
     if ( useOnThisDomainCallback ){
-      useOnThisDomainCallback( request.result );
+      useOnThisDomainCallback( request );
       useOnThisDomainCallback = null;
     }
   }

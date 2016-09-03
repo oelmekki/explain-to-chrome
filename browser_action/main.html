@@ -5,9 +5,18 @@
   <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
 </head>
 <body>
-  <div>
-    <p id="label">Currently <span id="status"></span> on <span id="domain"></span></p>
-    <p><button></button></p>
+  <div id="container">
+    <ul>
+      <li><label><input type="radio" name="activation" value="hover" /> Activate when overing links</label></li>
+      <li><label><input type="radio" name="activation" value="context" /> Activate through right click menu</label></li>
+    </ul>
+
+    <hr />
+
+    <div id="website-config">
+      <p id="label">Currently <span id="status"></span> on <span id="domain"></span></p>
+      <p><button></button></p>
+    </div>
   </div>
 
   <script src="./script.js"></script>
