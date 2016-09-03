@@ -1,3 +1,5 @@
+let loader, explainer;
+
 class Main {
   constructor(){
     document.body.addEventListener( "mouseenter", this.detect.bind( this ), true );
@@ -15,15 +17,15 @@ class Main {
   }
 
   explain( link ){
-    let loader;
-
     clearTimeout( this.explainTimeout );
     this.explainElement = link;
 
     this.explainTimeout = setTimeout( function(){
+      if ( loader ) loader.abort();
       loader = new IntentLoader( link );
       loader.confirm().then( function(){
-        let explainer = new Explainer( link, linkishUrl( link ) );
+        if ( explainer ) explainer.abort();
+        explainer = new Explainer( link, linkishUrl( link ) );
         loader.remove();
         explainer.fetch();
       });

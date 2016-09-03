@@ -2,6 +2,7 @@ class Popup {
   constructor( title, content ){
     this.title = title;
     this.content = content;
+    this.onClose = function(){};
     this.build();
   }
 
@@ -56,6 +57,7 @@ class Popup {
 
   destroy(){
     this.element.remove();
+    this.onClose();
   }
 }
 
