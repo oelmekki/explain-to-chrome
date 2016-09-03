@@ -16,13 +16,8 @@ function lookup( url ){
       else {
         response.text().then( function( content ){
           let match = content.match( /http-equiv="refresh" content=".*?URL=(.*?)"/ );
-          if ( match ){
-            lookup( match[1] ).then( success );
-          }
-
-          else {
-            success( url );
-          }
+          if ( match ) lookup( match[1] ).then( success );
+          else success( url );
         });
       }
     });
@@ -50,11 +45,20 @@ function useOnDomain( domain ){
   return new Promise( function( success ){
     chrome.storage.local.get( [ 'domains' ], function( response ){
       if ( response.domains && response.domains[ domain ] ){
-        success( true );
+        if ( deferred( response.domains[ domain ] ) ) success( false )
+        else success( true );
       }
       else success( false );
     });
   });
+}
+
+/*
+ * we want to allow deferring execution for one hour
+ */
+function deferred( value ){
+  if ( value === true ) return false;
+  return new Date().getTime() < value;
 }
 
 function toggleUse( domain, useIt ){
