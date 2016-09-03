@@ -40,7 +40,7 @@ class Main {
 
   toggle(){
     chrome.runtime.getBackgroundPage( ( background ) => {
-      background.toggleUse( this.domain, ! this.useOnDomain ).then( this.check.bind( this ) );
+      background.toggleUse( this.domain, ! this.useOnDomain ).then( this.checkDomain.bind( this ) );
     });
   }
 
